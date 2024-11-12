@@ -29,6 +29,7 @@ console.log(price); // 6250
 
 //Задание 2 -----------------
 
+/*
 const posts = [
   {
     id: "62e69d5a5458aac0ed320b35",
@@ -94,6 +95,7 @@ const normalizeData = (unnormalizedData: Data[]): Posts => {
 };
 
 console.log(normalizeData(posts));
+*/
 /**
  * {
  *    byId: {
@@ -103,4 +105,45 @@ console.log(normalizeData(posts));
  *    },
  *    allIds: ['62e69d5a5458aac0ed320b35', '62e69d5a5458aac0ed320b1c', ...]
  * }
+ */
+
+//Задание 3 -----------------
+
+const COMMENTS_URL = "https://jsonplaceholder.typicode.com/comments";
+
+const getData = async (url: string) => {
+  return await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: undefined,
+  }).then((res: Response): Promise<any> => res.json());
+};
+
+interface Obj {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+}
+
+getData(COMMENTS_URL).then((data: Obj[]) => {
+  let new_data: Obj[] = [];
+  new_data = [...data];
+  new_data.length = 10;
+
+  new_data.map((obj: Obj) => {
+    const { id, email } = obj;
+    console.log(`ID: ${id}, Email: ${email}`);
+  });
+});
+
+/**
+ * ID: 1, Email: Eliseo...
+ * ID: 2, Email: Jayne_Kuhic...
+ * ID: 3, Email: Nikita...
+ * ID: 4, Email: Lew...
+ * ...
  */
